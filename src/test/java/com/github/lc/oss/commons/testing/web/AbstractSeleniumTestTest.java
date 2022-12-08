@@ -558,6 +558,7 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         WebElement element = Mockito.mock(WebElement.class);
         List<WebElement> options = new ArrayList<>();
         WebElement option = Mockito.mock(WebElement.class);
+        Mockito.when(option.isEnabled()).thenReturn(true);
         options.add(option);
         Mockito.when(test.getDriver().findElement(By.id("id"))).thenReturn(element);
         Mockito.when(element.isDisplayed()).thenReturn(true);
