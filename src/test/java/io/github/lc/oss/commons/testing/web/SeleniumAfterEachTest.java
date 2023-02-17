@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.openqa.selenium.WebDriver;
 
-import com.github.lc.oss.commons.testing.AbstractTest;
+import io.github.lc.oss.commons.testing.AbstractTest;
 
 public class SeleniumAfterEachTest extends AbstractTest {
     private static class CallHelper {

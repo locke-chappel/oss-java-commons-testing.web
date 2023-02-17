@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.time.Clock;
 
@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.context.annotation.RequestScope;
 
-import com.github.lc.oss.commons.l10n.L10N;
-import com.github.lc.oss.commons.l10n.UserLocale;
-import com.github.lc.oss.commons.util.PathNormalizer;
-import com.github.lc.oss.commons.web.controllers.UserTheme;
-import com.github.lc.oss.commons.web.resources.Minifier;
-import com.github.lc.oss.commons.web.resources.MinifierService;
-import com.github.lc.oss.commons.web.services.ThemeService;
-import com.github.lc.oss.commons.web.util.CookiePrefixParser;
+import io.github.lc.oss.commons.l10n.L10N;
+import io.github.lc.oss.commons.l10n.UserLocale;
+import io.github.lc.oss.commons.util.PathNormalizer;
+import io.github.lc.oss.commons.web.controllers.UserTheme;
+import io.github.lc.oss.commons.web.resources.Minifier;
+import io.github.lc.oss.commons.web.resources.MinifierService;
+import io.github.lc.oss.commons.web.services.ThemeService;
+import io.github.lc.oss.commons.web.util.CookiePrefixParser;
 
 public class DefaultIntegrationConfig {
     @Bean

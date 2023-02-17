@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.http.HttpStatus;
 
-import com.github.lc.oss.commons.testing.AbstractMockTest;
+import io.github.lc.oss.commons.testing.AbstractMockTest;
 
 public class AbstractRestTestTest extends AbstractMockTest {
     private static enum TestEnum {

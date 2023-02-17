@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;

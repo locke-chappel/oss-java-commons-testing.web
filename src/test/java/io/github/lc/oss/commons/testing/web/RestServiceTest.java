@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -17,9 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import com.github.lc.oss.commons.encoding.Encodings;
-import com.github.lc.oss.commons.testing.AbstractMockTest;
-import com.github.lc.oss.commons.web.tokens.CsrfTokenManager;
+import io.github.lc.oss.commons.encoding.Encodings;
+import io.github.lc.oss.commons.testing.AbstractMockTest;
+import io.github.lc.oss.commons.web.tokens.CsrfTokenManager;
 
 public class RestServiceTest extends AbstractMockTest {
 

@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -39,8 +39,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.github.lc.oss.commons.serialization.Message;
-import com.github.lc.oss.commons.util.IoTools;
+import io.github.lc.oss.commons.serialization.Message;
+import io.github.lc.oss.commons.util.IoTools;
 
 @ExtendWith(SeleniumAfterEach.class)
 public abstract class AbstractSeleniumTest extends AbstractWebTest {

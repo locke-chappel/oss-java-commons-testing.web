@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,8 +29,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.lc.oss.commons.encoding.Encodings;
-import com.github.lc.oss.commons.web.tokens.CsrfTokenManager;
+import io.github.lc.oss.commons.encoding.Encodings;
+import io.github.lc.oss.commons.web.tokens.CsrfTokenManager;
 
 public class RestService {
     private static final StringHttpMessageConverter UTF_8_CONVERTER = new StringHttpMessageConverter(StandardCharsets.UTF_8);

@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.testing.web;
+package io.github.lc.oss.commons.testing.web;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,9 +35,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Quotes;
 import org.opentest4j.AssertionFailedError;
 
-import com.github.lc.oss.commons.serialization.Message;
-import com.github.lc.oss.commons.testing.AbstractMockTest;
-import com.github.lc.oss.commons.util.PathNormalizer;
+import io.github.lc.oss.commons.serialization.Message;
+import io.github.lc.oss.commons.testing.AbstractMockTest;
+import io.github.lc.oss.commons.util.PathNormalizer;
 
 public class AbstractSeleniumTestTest extends AbstractMockTest {
     private static class TestClass extends AbstractSeleniumTest {
