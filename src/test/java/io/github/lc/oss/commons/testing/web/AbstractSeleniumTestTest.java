@@ -104,6 +104,7 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         this.setField("chromiumPath", "  \t \r \n \t ", test);
         this.setField("sandbox", true, test);
         this.setField("chromiumAllowCors", true, test);
+        this.setField("headless", true, test);
         ChromeOptions result = test.getChromiumOptions();
         Assertions.assertNotNull(result);
     }
