@@ -86,7 +86,9 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
 
     protected ChromeOptions getChromiumOptions() {
         ChromeOptions opts = new ChromeOptions();
-        opts.setHeadless(this.headless);
+        if (this.headless) {
+            opts.addArguments("--headless=new");
+        }
         opts.addArguments("--window-size=" + this.windowSize);
         opts.addArguments("--disable-extensions");
         opts.addArguments("--disable-gpu");
