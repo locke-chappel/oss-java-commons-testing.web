@@ -5,11 +5,11 @@
     <parent>
         <groupId>io.github.locke-chappel.oss.commons</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
     </parent>
 
     <artifactId>testing.web</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <name>${project.artifactId}</name>
     <description>A JUnit based test framework for web applications</description>
     <url>https://github.com/locke-chappel/oss-commons-testing.web</url>
