@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import io.github.lc.oss.commons.l10n.L10N;
 import io.github.lc.oss.commons.l10n.UserLocale;
+import io.github.lc.oss.commons.l10n.Variable;
 import io.github.lc.oss.commons.serialization.Message;
 import io.github.lc.oss.commons.testing.AbstractMockTest;
 
@@ -33,7 +34,7 @@ public abstract class AbstractLocaleMockTest extends AbstractMockTest {
         Mockito.when(this.getL10n().getText(//
                 ArgumentMatchers.eq(Locale.ENGLISH), //
                 ArgumentMatchers.eq(id), //
-                ArgumentMatchers.any())). //
+                ArgumentMatchers.any(Variable[].class))). //
                 thenReturn(id + "-value");
     }
 
