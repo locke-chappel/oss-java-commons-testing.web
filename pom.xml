@@ -5,11 +5,11 @@
     <parent>
         <groupId>io.github.locke-chappel.oss.commons</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
     </parent>
 
     <artifactId>testing.web</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <name>${project.artifactId}</name>
     <description>A JUnit based test framework for web applications</description>
     <url>https://github.com/locke-chappel/oss-commons-testing.web</url>
@@ -136,8 +136,8 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>htmlunit-driver</artifactId>
-            <version>${org.seleniumhq.selenium.htmlunit-driver.version}</version>
+            <artifactId>htmlunit3-driver</artifactId>
+            <version>${org.seleniumhq.selenium.htmlunit3-driver.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
