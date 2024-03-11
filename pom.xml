@@ -12,7 +12,7 @@
     <version>1.0.10</version>
     <name>${project.artifactId}</name>
     <description>A JUnit based test framework for web applications</description>
-    <url>https://github.com/locke-chappel/oss-commons-testing.web</url>
+    <url>https://github.com/locke-chappel/oss-java-commons-testing.web</url>
 
     <licenses>
         <license>
