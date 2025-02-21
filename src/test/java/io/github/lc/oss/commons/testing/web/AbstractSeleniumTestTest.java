@@ -141,7 +141,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         Logs logs = Mockito.mock(Logs.class);
         List<LogEntry> entries = new ArrayList<>();
         entries.add(new LogEntry(Level.INFO, System.currentTimeMillis(), "[App] App Message"));
-        entries.add(new LogEntry(Level.INFO, System.currentTimeMillis(), "Failed to load resource: the server responded with a status of 409"));
+        entries.add(new LogEntry(Level.INFO, System.currentTimeMillis(),
+                "Failed to load resource: the server responded with a status of 409"));
         entries.add(new LogEntry(Level.INFO, System.currentTimeMillis(), ""));
         LogEntries logEntries = new LogEntries(entries);
         AbstractSeleniumTest test = new TestClass();
@@ -173,7 +174,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
             test.checkLogs(testInfo);
             Assertions.fail("Expected error");
         } catch (AssertionFailedError ex) {
-            Assertions.assertEquals("Browser errors detected during null:\nBoom! ==> expected: <true> but was: <false>", ex.getMessage());
+            Assertions.assertEquals("Browser errors detected during null:\nBoom! ==> expected: <true> but was: <false>",
+                    ex.getMessage());
         }
     }
 
@@ -208,7 +210,9 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         AbstractSeleniumTest test = new TestClass();
 
         WebElement element = Mockito.mock(WebElement.class);
-        Mockito.when(test.getDriver().findElement(By.cssSelector("div#lib\\.notitifcations\\.banner > div.message.success > span.close"))).thenReturn(element);
+        Mockito.when(test.getDriver()
+                .findElement(By.cssSelector("div#lib\\.notitifcations\\.banner > div.message.success > span.close")))
+                .thenReturn(element);
         Mockito.when(element.isDisplayed()).thenReturn(true);
         Mockito.when(element.isEnabled()).thenReturn(true);
 
@@ -278,7 +282,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
     public void test_navigate() {
         AbstractSeleniumTest test = new TestClass();
 
-        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return document.readyState;")).thenReturn("complete");
+        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return document.readyState;"))
+                .thenReturn("complete");
 
         test.navigate("/index");
     }
@@ -288,7 +293,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         AbstractSeleniumTest test = new TestClass();
 
         Mockito.when(test.getDriver().getCurrentUrl()).thenReturn("/index");
-        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return $$._inProgress.IsRunning();")).thenReturn(false);
+        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return $$._inProgress.IsRunning();"))
+                .thenReturn(false);
 
         test.waitForNavigate("/index");
     }
@@ -297,7 +303,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
     public void test_waitForScipt_string() {
         AbstractSeleniumTest test = new TestClass();
 
-        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return $$._inProgress.IsRunning();")).thenReturn("false");
+        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return $$._inProgress.IsRunning();"))
+                .thenReturn("false");
 
         test.waitForScript();
     }
@@ -306,7 +313,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
     public void test_waitForScipt_boolean() {
         AbstractSeleniumTest test = new TestClass();
 
-        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return $$._inProgress.IsRunning();")).thenReturn(false);
+        Mockito.when(((JavascriptExecutor) test.getDriver()).executeScript("return $$._inProgress.IsRunning();"))
+                .thenReturn(false);
 
         test.waitForScript();
     }
@@ -357,7 +365,7 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         Mockito.when(test.getDriver().findElement(By.id("id"))).thenReturn(element);
         Mockito.when(element.isDisplayed()).thenReturn(true);
         Mockito.when(element.isEnabled()).thenReturn(true);
-        Mockito.when(element.getAttribute("value")).thenReturn("value");
+        Mockito.when(element.getDomProperty("value")).thenReturn("value");
 
         test.assertTextValue("id", "value");
     }
@@ -382,7 +390,7 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
                     return "value";
                 }
             }
-        }).when(element).getAttribute("value");
+        }).when(element).getDomProperty("value");
 
         test.assertTextValueContains(element, "al");
     }
@@ -531,7 +539,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         AbstractSeleniumTest test = new TestClass();
         this.setField("screenShotPath", this.getScreenShotPath(), test);
 
-        Mockito.when(((ChromeDriver) test.getDriver()).getScreenshotAs(OutputType.BYTES)).thenReturn(new byte[] { 0x00 });
+        Mockito.when(((ChromeDriver) test.getDriver()).getScreenshotAs(OutputType.BYTES))
+                .thenReturn(new byte[] { 0x00 });
 
         test.screenShot(this.getScreenShotName());
     }
@@ -547,7 +556,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 return null;
             }
-        }).when((JavascriptExecutor) test.getDriver()).executeScript("arguments[0].scrollIntoView({ block : \"center\", inline : \"center\" });", element);
+        }).when((JavascriptExecutor) test.getDriver())
+                .executeScript("arguments[0].scrollIntoView({ block : \"center\", inline : \"center\" });", element);
 
         test.scrollTo(element);
     }
@@ -565,7 +575,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         Mockito.when(element.isDisplayed()).thenReturn(true);
         Mockito.when(element.isEnabled()).thenReturn(true);
         Mockito.when(element.getTagName()).thenReturn("select");
-        Mockito.when(element.findElements(By.xpath(".//option[@value = " + Quotes.escape("value") + "]"))).thenReturn(options);
+        Mockito.when(element.findElements(By.xpath(".//option[@value = " + Quotes.escape("value") + "]")))
+                .thenReturn(options);
 
         test.selectValue("id", "value");
     }
@@ -642,7 +653,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
         WebElement msg1 = Mockito.mock(WebElement.class);
         WebElement msg2 = Mockito.mock(WebElement.class);
         WebElement msg3 = Mockito.mock(WebElement.class);
-        Mockito.when(element.findElements(By.cssSelector("div.message.Error"))).thenReturn(Arrays.asList(msg1, msg2, msg3));
+        Mockito.when(element.findElements(By.cssSelector("div.message.Error")))
+                .thenReturn(Arrays.asList(msg1, msg2, msg3));
         Mockito.when(msg1.getText()).thenReturn("a");
         Mockito.when(msg2.getText()).thenReturn("e");
         Mockito.when(msg3.getText()).thenReturn(null);
@@ -716,7 +728,8 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
             Assertions.fail("Expected exception");
         } catch (TimeoutException ex) {
             end = System.currentTimeMillis();
-            Assertions.assertTrue(ex.getMessage().startsWith("Expected condition failed: waiting for url to be \"junk\". Current url: \"null\""));
+            Assertions.assertTrue(ex.getMessage()
+                    .startsWith("Expected condition failed: waiting for url to be \"junk\". Current url: \"null\""));
         }
 
         // test should abort in ~3 seconds, allow for a compute buffer of ~2x that

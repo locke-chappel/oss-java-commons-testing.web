@@ -115,23 +115,27 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
 
     @BeforeEach
     public void launchChromium() {
-        this.driver = new ChromeDriver(new ChromeDriverService.Builder().usingPort(this.chromiumDriverPort).build(), this.getChromiumOptions());
+        this.driver = new ChromeDriver(new ChromeDriverService.Builder().usingPort(this.chromiumDriverPort).build(),
+                this.getChromiumOptions());
     }
 
     @AfterEach
     public void checkLogs(TestInfo testInfo) {
         String appLog = this.getBrowserLogsAsString(e -> e.contains(this.loggingPrefix));
 
-        String browserLog = this.getBrowserLogsAsString(e -> this.getExpectedBrowserErrors().stream().noneMatch(s -> e.contains(s)));
+        String browserLog = this
+                .getBrowserLogsAsString(e -> this.getExpectedBrowserErrors().stream().noneMatch(s -> e.contains(s)));
 
         if (!appLog.trim().equals("")) {
             System.err.println("### Application Browser Console Log");
             System.err.println(appLog);
             System.err.println("### End Application Browser Console Log");
-            Assertions.assertFalse(appLog.contains(this.loggingPrefix + " [ERROR]"), "Application errors detected during " + testInfo.getDisplayName());
+            Assertions.assertFalse(appLog.contains(this.loggingPrefix + " [ERROR]"),
+                    "Application errors detected during " + testInfo.getDisplayName());
         }
 
-        Assertions.assertTrue(browserLog.trim().equals(""), "Browser errors detected during " + testInfo.getDisplayName() + ":\n" + browserLog);
+        Assertions.assertTrue(browserLog.trim().equals(""),
+                "Browser errors detected during " + testInfo.getDisplayName() + ":\n" + browserLog);
     }
 
     protected WebElement assertById(String id) {
@@ -175,7 +179,8 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
             }, maxWait * 1000);
         } catch (AssertionFailedError ex) {
             if ("Waited too long, aborting ==> expected: <true> but was: <false>".equals(ex.getMessage())) {
-                throw new AssertionFailedError(String.format("No '%s' message with text '%s' was found", severity, text));
+                throw new AssertionFailedError(
+                        String.format("No '%s' message with text '%s' was found", severity, text));
             }
             throw ex;
         }
@@ -224,7 +229,8 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
     }
 
     protected void clickBanner(String bannerId, Message.Severity severity) {
-        this.clickByCssSelector("div#" + bannerId + " > div.message." + severity.name().toLowerCase() + " > span.close");
+        this.clickByCssSelector(
+                "div#" + bannerId + " > div.message." + severity.name().toLowerCase() + " > span.close");
     }
 
     protected void clickByCssSelector(String selector) {
@@ -339,7 +345,7 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
     }
 
     protected String getTextValue(WebElement element) {
-        return element.getAttribute("value");
+        return element.getDomProperty("value");
     }
 
     protected void navigate(String url) {
@@ -355,7 +361,8 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
         this.waitUntil(new ExpectedCondition<Boolean>() {
             @Override
             public @Nullable Boolean apply(@Nullable WebDriver arg0) {
-                return ((JavascriptExecutor) AbstractSeleniumTest.this.getDriver()).executeScript("return document.readyState;").equals("complete");
+                return ((JavascriptExecutor) AbstractSeleniumTest.this.getDriver())
+                        .executeScript("return document.readyState;").equals("complete");
             }
         });
     }
@@ -370,7 +377,8 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
     }
 
     protected void scrollTo(WebElement element) {
-        ((JavascriptExecutor) this.getDriver()).executeScript("arguments[0].scrollIntoView({ block : \"center\", inline : \"center\" });", element);
+        ((JavascriptExecutor) this.getDriver())
+                .executeScript("arguments[0].scrollIntoView({ block : \"center\", inline : \"center\" });", element);
     }
 
     protected void selectValue(String id, String value) {
