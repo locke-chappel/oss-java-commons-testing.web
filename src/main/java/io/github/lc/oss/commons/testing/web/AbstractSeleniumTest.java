@@ -12,8 +12,6 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.annotation.Nullable;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -360,7 +358,7 @@ public abstract class AbstractSeleniumTest extends AbstractWebTest {
          */
         this.waitUntil(new ExpectedCondition<Boolean>() {
             @Override
-            public @Nullable Boolean apply(@Nullable WebDriver arg0) {
+            public Boolean apply(WebDriver arg0) {
                 return ((JavascriptExecutor) AbstractSeleniumTest.this.getDriver())
                         .executeScript("return document.readyState;").equals("complete");
             }
