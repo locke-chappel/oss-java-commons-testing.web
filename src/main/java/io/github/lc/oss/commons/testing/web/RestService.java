@@ -6,13 +6,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.core5.http.io.SocketConfig;
+import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.Assertions;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +32,13 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.github.lc.oss.commons.encoding.Encodings;
 import io.github.lc.oss.commons.web.tokens.CsrfTokenManager;
 
 public class RestService {
-    private static final StringHttpMessageConverter UTF_8_CONVERTER = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+    private static final StringHttpMessageConverter UTF_8_CONVERTER = new StringHttpMessageConverter(
+            StandardCharsets.UTF_8);
 
     protected static final int DEFAULT_TIMEOUT = 30 * 1000;
 
@@ -55,7 +60,8 @@ public class RestService {
         return headers;
     }
 
-    public <T> ResponseEntity<T> call(HttpMethod method, String url, Map<String, String> headers, Class<T> responseType, Object body) {
+    public <T> ResponseEntity<T> call(HttpMethod method, String url, Map<String, String> headers, Class<T> responseType,
+            Object body) {
         HttpHeaders requestHeaders = new HttpHeaders();
         if (headers != null) {
             headers.forEach((k, v) -> requestHeaders.add(k, v));
@@ -68,7 +74,8 @@ public class RestService {
             throw new AssertionFailedError("Invalid URL");
         }
 
-        ResponseEntity<T> response = this.createRestTemplate().exchange(uri, method, new HttpEntity<>(body, requestHeaders), responseType);
+        ResponseEntity<T> response = this.createRestTemplate().exchange(uri, method,
+                new HttpEntity<>(body, requestHeaders), responseType);
         if (response.getStatusCode() == HttpStatus.FORBIDDEN && //
                 this.getCsrfTokenManager() != null && //
                 (headers == null || !headers.containsKey(this.getCsrfTokenManager().getHeaderId()))) //
@@ -104,7 +111,8 @@ public class RestService {
         return response;
     }
 
-    public ResponseEntity<JsonObject> callJson(HttpMethod method, String url, Map<String, String> headers, Object body, HttpStatus expectedStatus) {
+    public ResponseEntity<JsonObject> callJson(HttpMethod method, String url, Map<String, String> headers, Object body,
+            HttpStatus expectedStatus) {
         String data = null;
         if (body instanceof String) {
             data = (String) body;
@@ -126,7 +134,8 @@ public class RestService {
         }
 
         if (result.getBody().charAt(0) != '{') {
-            throw new AssertionFailedError("JSON response is not a JSON object. Body is vulnerable to interception attacks.");
+            throw new AssertionFailedError(
+                    "JSON response is not a JSON object. Body is vulnerable to interception attacks.");
         }
 
         JsonObject jsonObject = this.fromJson(result.getBody());
@@ -139,20 +148,30 @@ public class RestService {
          *
          * Note: HttpClient is not reusable :(
          */
+        ConnectionConfig connConfig = ConnectionConfig.custom(). //
+                setConnectTimeout(Timeout.ofMicroseconds(this.getTimeout())). //
+                build();
+
         SocketConfig socketConfig = SocketConfig.custom(). //
-                setSoTimeout(this.getTimeout(), TimeUnit.MILLISECONDS). //
+                setSoTimeout(Timeout.ofMilliseconds(this.getTimeout())). //
                 build();
 
-        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
-        connManager.setDefaultSocketConfig(socketConfig);
+        PoolingHttpClientConnectionManager connManager = PoolingHttpClientConnectionManagerBuilder.create(). //
+                setDefaultSocketConfig(socketConfig). //
+                setDefaultConnectionConfig(connConfig). //
+                build();
 
-        HttpClient client = HttpClientBuilder.create(). //
-                disableRedirectHandling(). //
+        RequestConfig requestConfig = RequestConfig.custom(). //
+                setResponseTimeout(Timeout.ofMilliseconds(this.getTimeout())). //
+                build();
+
+        CloseableHttpClient client = HttpClientBuilder.create(). //
+                setDefaultRequestConfig(requestConfig). //
                 setConnectionManager(connManager). //
+                disableRedirectHandling(). //
                 build();
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(client);
-        factory.setConnectTimeout(this.getTimeout());
-        return factory;
+
+        return new HttpComponentsClientHttpRequestFactory(client);
     }
 
     public RestTemplate createRestTemplate() {
@@ -210,7 +229,8 @@ public class RestService {
         return this.postJson(url, body, headers, HttpStatus.OK);
     }
 
-    public ResponseEntity<JsonObject> postJson(String url, Object body, Map<String, String> headers, HttpStatus expectedStatus) {
+    public ResponseEntity<JsonObject> postJson(String url, Object body, Map<String, String> headers,
+            HttpStatus expectedStatus) {
         Map<String, String> allHeaders = new HashMap<>();
         allHeaders.put(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         if (headers != null) {
@@ -227,7 +247,8 @@ public class RestService {
         return this.putJson(url, body, headers, HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<JsonObject> putJson(String url, Object body, Map<String, String> headers, HttpStatus expectedStatus) {
+    public ResponseEntity<JsonObject> putJson(String url, Object body, Map<String, String> headers,
+            HttpStatus expectedStatus) {
         Map<String, String> allHeaders = new HashMap<>();
         allHeaders.put(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         if (headers != null) {
