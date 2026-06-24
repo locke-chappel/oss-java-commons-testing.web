@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
@@ -31,6 +32,7 @@ import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.Logs;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Quotes;
 import org.opentest4j.AssertionFailedError;
@@ -720,6 +722,9 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
             }
         };
 
+        Capabilities caps = Mockito.mock(Capabilities.class);
+        Mockito.when(((RemoteWebDriver) test.getDriver()).getCapabilities()).thenReturn(caps);
+
         long start = 0;
         long end = 0;
         try {
@@ -755,6 +760,9 @@ public class AbstractSeleniumTestTest extends AbstractMockTest {
                 return "not junk";
             }
         }).when(test.getDriver()).getCurrentUrl();
+
+        Capabilities caps = Mockito.mock(Capabilities.class);
+        Mockito.when(((RemoteWebDriver) test.getDriver()).getCapabilities()).thenReturn(caps);
 
         final long testStart = System.currentTimeMillis();
         test.waitUntil(ExpectedConditions.urlToBe("junk"), 1, 10);
